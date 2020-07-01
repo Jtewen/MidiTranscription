@@ -1,11 +1,13 @@
-import mido
+"""
+identifier.py contains the functions used to identify:
+    
+    1. note (A, A#, B, C, C#, etc)
+    
+    2. chord (major triad, minor triad, major 7th, etc)
+"""
 
-emptyNote = []
-notesPlay = []
-inport = mido.open_input()
-msg = inport.receive()
 
-
+# DEFENITIONS
 # assigning midi values to notes
 cnotes = [36,48,60,72,84]
 csnotes = [x + 1 for x in cnotes]
@@ -34,79 +36,70 @@ minMajSev = [0,3,7,11]
 dimTri = [0,3,6]
 dimSev = [0,3,6,9]
 halfDimSev = [0,3,6,10]
+# END DEFENITIONS
 
 
-def ccheck(notes):
-    base = notes[0]
+# checks the chord for the basenote
+def noteCheck(notes):
     notes.sort()
-    basenote = 'c'
+    base = notes[0]
     
-    # checks the note for the chord
     if base in cnotes:
-        basenote = 'C'
+        return('C')
     elif base in csnotes:
-        basenote = 'C#'
+        return('C#')
     elif base in dnotes:
-        basenote = 'D'
+        return('D')
     elif base in dsnotes:
-        basenote = 'D#'
+        return('D#')
     elif base in enotes:
-        basenote = 'E'
+        return('E')
     elif base in fnotes:
-        basenote = 'F'
+        return('F')
     elif base in fsnotes:
-        basenote = 'F#'
+        return('F#')
     elif base in gnotes:
-        basenote = 'G'
+        return('G')
     elif base in gsnotes:
-        basenote = 'G#'
+        return('G#')
     elif base in anotes:
-        basenote = 'A'
+        return('A')
     elif base in asnotes:
-        basenote = 'A#'
+        return('A#')
     elif base in bnotes:
-        basenote = 'B'
+        return('B')
 
 
+# checks the spacing between the notes to identify the chord
+def chordCheck(notes):
+    base = notes[0]
     # checks the chord type
     notes = [x - base for x in notes]
     if notes == majTri:
-        print(basenote + ' Major Triad')
+        return(' Major Triad')
     elif notes == majSix:
-        print(basenote + ' Major Sixth Chord')
+        return(' Major Sixth Chord')
     elif notes == domSev:
-        print(basenote + ' Dominant Seventh Chord')
+        return(' Dominant Seventh Chord')
     elif notes == majSev:
-        print(basenote + ' Major Seventh Chord')
+        return(' Major Seventh Chord')
     elif notes == augTri:
-        print(basenote + ' Augmented Triad')
+        return(' Augmented Triad')
     elif notes == augSev:
-        print(basenote + ' Augmented Seventh Chord')
+        return(' Augmented Seventh Chord')
     elif notes == minTri:
-        print(basenote + ' Minor Triad')
+        return(' Minor Triad')
     elif notes == minSix:
-        print(basenote + ' Minor Sixth Chord')
+        return(' Minor Sixth Chord')
     elif notes == minSev:
-        print(basenote + ' Minor Seventh Chord')
+        return(' Minor Seventh Chord')
     elif notes == minMajSev:
-        print(basenote + ' Minor-Major Seventh Chord')
+        return(' Minor-Major Seventh Chord')
     elif notes == dimTri:
-        print(basenote + ' Diminished Triad')
+        return(' Diminished Triad')
     elif notes == dimSev:
-        print(basenote + ' Diminished Seventh Chord')
+        return(' Diminished Seventh Chord')
     elif notes == halfDimSev:
-        print(basenote + ' Half-diminished Seveneth Chord')
+        return(' Half-diminished Seveneth Chord')
     else:
-        print(basenote)
-
-
-for msg in inport:
-    if msg.type == 'note_off':
-        if msg.note in notesPlay:
-            notesPlay.remove(msg.note)
-            if len(notesPlay) >0:
-                ccheck(notesPlay)
-    else:
-        notesPlay.append(msg.note)
-        ccheck(notesPlay)
-    
+        return(' note')
