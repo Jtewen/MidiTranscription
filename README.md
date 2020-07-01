@@ -14,7 +14,6 @@ Currently can identify the most common triads and four-note chords (Major Triad,
 * Synthesia-styled top-down view
 * Audio output
 * Recording and playback
-* Split into functions into multiple files to ensure scalability
 
 ## Dependencies
 
